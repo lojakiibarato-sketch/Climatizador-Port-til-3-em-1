@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Climatizador Portátil 3 em 1 - Refresque Seu Verão!</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <meta name="description" content="Conheça o Mini Climatizador de Ar Portátil! Umidifica, ventila e refresca com 5 sprays, 3 velocidades e 7 cores de LED. A solução perfeita para o calor." />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ================================================
+           1. RESET E VARIÁVEIS GLOBAIS (TEMA DE VERÃO)
+           ================================================ */
+        :root {
+            --c-bg: #F0F8FF;
+            --c-bg-panel: #FFFFFF;
+            --c-fg: #333333;
+            --c-fg-subtle: #757575;
+            --c-border: rgba(0, 0, 0, 0.1);
+            --c-accent: #FF7F50; 
+            --c-accent-light: #FFA07A;
+            --maxw: 1024px;
+            --radius: 28px;
+            --nav-h: 56px;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--c-bg);
+            color: var(--c-fg);
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        img, video { display: block; max-width: 100%; height: auto; }
+
+        /* ================================================
+           2. NAVEGAÇÃO E ELEMENTOS DE UI
+           ================================================ */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            height: var(--nav-h);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--c-border);
+        }
+        .nav-inner {
+            max-width: var(--maxw); height: 100%; margin: 0 auto;
+            padding: 0 24px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav .brand { font-weight: 600; font-size: 17px; color: var(--c-fg); }
+        .btn {
+            appearance: none; border: none; cursor: pointer;
+            background: var(--c-accent); color: #fff;
+            padding: 10px 20px; border-radius: 999px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 127, 80, 0.3);
+        }
+        .btn:hover {
+            transform: scale(1.05) translateY(-1px);
+            box-shadow: 0 8px 25px rgba(255, 127, 80, 0.4);
+            background: var(--c-accent-light);
+        }
+        .section-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800; letter-spacing: -0.04em;
+            text-align: center; max-width: 800px;
+            margin: 0 auto 60px auto;
+            text-wrap: balance;
+        }
+        .section-subtitle {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 500;
+            color: var(--c-fg-subtle);
+            text-align: center;
+            max-width: 700px;
+            margin: -40px auto 60px auto;
+            text-wrap: balance;
+        }
+
+        /* Video Controls */
+        .video-controls { position: absolute; bottom: 20px; right: 20px; z-index: 2; }
+        .video-controls button {
+            background: rgba(0, 0, 0, 0.2); border: none; border-radius: 50%;
+            width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: background 0.3s ease, transform 0.2s ease;
+            padding: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .video-controls button:hover { background: rgba(0, 0, 0, 0.4); transform: scale(1.05); }
+        .video-controls button svg { width: 24px; height: 24px; color: #fff; }
+
+        /* ================================================
+           3. SEÇÃO HERO
+           ================================================ */
+        .hero {
+            height: 100svh; position: relative; display: flex;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 0 24px; overflow: hidden;
+        }
+        .hero .hero-video-bg {
+            position: absolute; top: 50%; left: 50%;
+            width: 100%; height: 100%; object-fit: cover;
+            transform: translate(-50%, -50%); z-index: -1;
+            filter: brightness(0.7);
+        }
+        .hero-content {
+            position: relative; z-index: 1;
+            animation: hero-fade-in 1.5s ease-out forwards;
+            color: #fff;
+        }
+        @keyframes hero-fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 6.5rem);
+            font-weight: 800; letter-spacing: -0.05em;
+            line-height: 1; margin-bottom: 16px;
+        }
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 4vw, 1.75rem);
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px; margin: 0 auto 32px;
+            text-wrap: balance;
+        }
+        
+        /* ================================================
+           4. SEÇÃO DESTAQUES (Feature Grid)
+           ================================================ */
+        .features { padding: 120px 24px; background: var(--c-bg-panel); }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px; max-width: var(--maxw); margin: 0 auto;
+        }
+        .feature-item { text-align: left; }
+        .feature-item svg { width: 48px; height: 48px; margin-bottom: 16px; color: var(--c-accent); }
+        .feature-item h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 8px; }
+        .feature-item p { font-size: 1rem; color: var(--c-fg-subtle); line-height: 1.6; }
+
+        /* ================================================
+           5. SEÇÃO CORES 
+           ================================================ */
+        .colors { padding: 120px 0; overflow-x: hidden; }
+        .color-scroller-wrapper { max-width: var(--maxw); margin: 0 auto; }
+        .color-scroller {
+            display: flex; justify-content: flex-start; gap: 30px;
+            padding: 20px 24px; overflow-x: auto; scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        @media (min-width: 1020px) { .color-scroller { flex-wrap: wrap; justify-content: center; gap: 40px; overflow-x: hidden; } }
+        .color-scroller::-webkit-scrollbar { height: 8px; }
+        .color-scroller::-webkit-scrollbar-track { background: #eee; border-radius: 4px; }
+        .color-scroller::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        .color-scroller::-webkit-scrollbar-thumb:hover { background: #bbb; }
+        .color-card {
+            flex: 0 0 clamp(300px, 80vw, 380px);
+            scroll-snap-align: center; background: var(--c-bg-panel);
+            border-radius: var(--radius); padding: 40px 32px;
+            border: 1px solid var(--c-border); text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .color-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .color-card img { width: 100%; height: 280px; object-fit: contain; margin: 0 auto 24px auto; }
+        .color-card h3 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
+        .color-card p { color: var(--c-fg-subtle); margin-bottom: 24px; font-size: 1rem; line-height: 1.6; }
+
+        /* ================================================
+           6. SEÇÕES DE DETALHES (Texto e Imagem)
+           ================================================ */
+        .specs { padding: 60px 24px; }
+        .specs-grid {
+            max-width: var(--maxw); margin: 80px auto;
+            display: grid; grid-template-columns: 1fr; gap: 40px;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .specs-grid { grid-template-columns: repeat(2, 1fr); gap: 80px; }
+            .specs-grid.reversed > .specs-text { order: 2; }
+        }
+        .specs-text { text-align: center; }
+        @media (min-width: 768px) { .specs-text { text-align: left; } }
+        .specs-text h3 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 16px; text-wrap: balance; }
+        .specs-text p { font-size: 1.125rem; color: var(--c-fg-subtle); line-height: 1.7; max-width: 450px; margin: 0 auto; }
+        @media (min-width: 768px) { .specs-text p { margin: 0; } }
+        .specs-image { overflow: hidden; border-radius: var(--radius); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .specs-image img { width: 100%; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .specs-image:hover img { transform: scale(1.03); }
+        
+        /* ================================================
+           7. SEÇÃO DE ESPECIFICAÇÕES TÉCNICAS
+           ================================================ */
+        .tech-specs { padding: 120px 24px; text-align: center; background-color: var(--c-bg-panel); }
+        .tech-specs ul { list-style: none; max-width: 500px; margin: 0 auto; text-align: left; }
+        .tech-specs li {
+            font-size: 1.1rem; padding: 15px 0; border-bottom: 1px solid var(--c-border);
+            display: flex; justify-content: space-between;
+        }
+        .tech-specs li:last-child { border-bottom: none; }
+        .tech-specs li strong { color: var(--c-fg); font-weight: 600; }
+
+        /* ================================================
+           8. SEÇÃO CTA E FOOTER
+           ================================================ */
+        
+        .cta { 
+            padding: 120px 24px; 
+            text-align: center;
+            position: relative; 
+            background-image: url('imagemfinal.png'); /* << ADICIONE O CAMINHO DA SUA IMAGEM AQUI */
+            background-size: cover; 
+            background-position: center center; 
+            background-attachment: fixed; 
+            overflow: hidden; 
+            z-index: 1; 
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.75); 
+            z-index: -1; 
+        }
+
+        .footer {
+            background: #2d3748;
+            padding: 40px 24px;
+            color: #a0aec0;
+            font-size: 14px;
+            line-height: 1.8;
+            text-align: center;
+        }
+        .footer-content { max-width: var(--maxw); margin: 0 auto; }
+        .footer p { margin: 0 0 8px 0; }
+        .footer p:last-child { margin-bottom: 0; }
+        .footer a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        
+        /* ================================================
+           9. ANIMAÇÕES DE REVELAÇÃO (Scroll Reveal)
+           ================================================ */
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* ================================================
+           10. ESTILOS RESPONSIVOS (MOBILE)
+           ================================================ */
+        @media (max-width: 768px) {
+            .features, .colors, .tech-specs, .cta { padding-top: 60px; padding-bottom: 60px; }
+            .specs { padding-top: 30px; padding-bottom: 30px; }
+            .section-title { margin-bottom: 30px; font-size: clamp(2rem, 10vw, 2.8rem); }
+            .section-subtitle { margin-top: -20px; margin-bottom: 30px; font-size: clamp(1rem, 5vw, 1.25rem); }
+            .specs-grid { margin-top: 30px; margin-bottom: 30px; gap: 30px; }
+            .color-card { flex: 0 0 clamp(280px, 85vw, 340px); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="brand">Climatizador Portátil 3 em 1</div>
+            <a href="#cta-final" class="btn">Comprar</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <video id="heroVideo" class="hero-video-bg" autoplay loop muted playsinline poster="poster-climatizador.jpg">
+                <source src="video.mp4" type="video/mp4">
+            </video>
+            <div class="hero-content reveal">
+                <h1 class="hero-title">Seu Verão Mais Refrescante.</h1>
+                <p class="hero-subtitle">Com 3 velocidades, 5 sprays de névoa e 7 cores de LED, ele transforma qualquer ambiente no seu oásis particular.</p>
+                <a href="#cta-final" class="btn">Quero o Meu Agora</a>
+            </div>
+            <div class="video-controls">
+                <button id="muteToggle">
+                    <svg id="volumeOnIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a11.955 11.955 0 010 12.728l-1.483-1.484a9.959 9.959 0 000-9.76l1.483-1.484z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.147-1.636.422-2.396.234-.847 1.058-1.354 1.938-1.354h11.24z" /></svg>
+                    <svg id="volumeOffIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.147-1.636.422-2.396.234-.847 1.058-1.354 1.938-1.354h11.24z" /></svg>
+                </button>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-grid">
+                <div class="feature-item reveal">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.25a.75.75 0 01-.75-.75v-7.5c0-.71.55-1.28.9-1.42l.004-.002 4.1-1.64a1.5 1.5 0 011.4 0l4.1 1.64.004.002c.35.14.9.71.9 1.42v7.5a.75.75 0 01-.75.75h-4.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 9.75h16.5" /></svg>
+                    <h3>3 em 1: Climatiza, Umidifica e Ventila</h3>
+                    <p>Reduz a temperatura do ambiente com uma névoa ultrafina, umidifica o ar para combater o tempo seco e ventila com 3 níveis de velocidade.</p>
+                </div>
+                <div class="feature-item reveal" style="transition-delay: 0.1s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.998 15.998 0 011.622-3.385m5.043.025a15.998 15.998 0 001.622-3.385m3.388 1.62a15.998 15.998 0 00-1.622 3.385m-5.043-.025a15.998 15.998 0 01-3.388 1.622m7.749-9.349a3 3 0 00-5.78-1.128 2.25 2.25 0 01-2.4-2.245 4.5 4.5 0 008.4 2.245c0 .399-.078.78-.22 1.128zm0 0a15.998 15.998 0 00-3.388-1.62m5.043.025a15.998 15.998 0 01-1.622-3.385m-5.043-.025a15.998 15.998 0 00-1.622-3.385m-3.388 1.62a15.998 15.998 0 001.622 3.385" /></svg>
+                    <h3>Luz Noturna com 7 Cores</h3>
+                    <p>Crie uma atmosfera relaxante com a iluminação LED. Escolha sua cor favorita ou ative o modo gradiente. Perfeito para usar como luz noturna.</p>
+                </div>
+                <div class="feature-item reveal" style="transition-delay: 0.2s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                    <h3>Portátil e Econômico</h3>
+                    <p>Com alça de couro e alimentação via USB, você pode levá-lo para qualquer lugar. É silencioso e tem baixo consumo de energia. Perfeito para sua mesa ou quarto.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="colors">
+            <h2 class="section-title reveal">Disponível em 3 cores.</h2>
+            <p class="section-subtitle reveal">As cores são enviadas conforme o estoque. Se desejar uma cor específica, observe ao fazer o pedido.</p>
+            <div class="color-scroller-wrapper">
+                <div class="color-scroller">
+                    <article class="color-card reveal">
+                        <img src="branco.png" alt="Climatizador na cor Branca">
+                        <h3>Branco</h3>
+                        <p>Um design clean e minimalista que combina com qualquer decoração, trazendo uma sensação de paz e frescor.</p>
+                    </article>
+                    <article class="color-card reveal" style="transition-delay: 0.1s;">
+                        <img src="preto.png" alt="Climatizador na cor Preta">
+                        <h3>Preto</h3>
+                        <p>Moderno e sofisticado, ideal para ambientes de trabalho ou para quem prefere um visual mais discreto e elegante.</p>
+                    </article>
+                    <article class="color-card reveal" style="transition-delay: 0.2s;">
+                        <img src="rosa.png" alt="Climatizador na cor Azul">
+                        <h3>Rosa</h3>
+                        <p>A cor rosa transmite suavidade, delicadeza e charme. Ideal para quem gosta de destacar sua personalidade.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="specs">
+            <h2 class="section-title reveal">Conheça os detalhes.</h2>
+            <div class="specs-grid reveal">
+                <div class="specs-text">
+                    <h3>Potencialize o frescor.</h3>
+                    <p>O reservatório de 600ml garante horas de funcionamento. Para um efeito ainda mais gelado, adicione cubos de gelo na água e sinta a diferença imediata na temperatura do ar.</p>
+                </div>
+                <div class="specs-image">
+                    <img src="detalhe-gelo.jpg" alt="Pessoa adicionando gelo no reservatório do climatizador">
+                </div>
+            </div>
+        </section>
+
+        <section class="specs">
+            <div class="specs-grid reversed reveal">
+                <div class="specs-text">
+                    <h3>Controle e conveniência.</h3>
+                    <p>Ajuste a direção do vento em até 60° para criar sua zona de conforto pessoal. Use a função de timer (1, 2 ou 3 horas) para programar o desligamento automático e durma tranquilo.</p>
+                </div>
+                <div class="specs-image">
+                    <img src="detalhe-timer.jpg" alt="Interface mostrando o timer do climatizador">
+                </div>
+            </div>
+        </section>
+        
+        <section class="tech-specs" id="specs">
+            <h2 class="section-title reveal">Especificações Técnicas</h2>
+            <ul class="reveal">
+                <li><strong>Potência:</strong> <span>10W</span></li>
+                <li><strong>Capacidade do tanque:</strong> <span>600ml</span></li>
+                <li><strong>Tensão:</strong> <span>5V</span></li>
+                <li><strong>Nível de Ruído:</strong> <span>40-50db (Silencioso)</span></li>
+                <li><strong>Tamanho:</strong> <span>6 Polegadas</span></li>
+                <li><strong>Alimentação:</strong> <span>USB (Cabo Type-C incluso)</span></li>
+                <li><strong>Itens Inclusos:</strong> <span>1 Climatizador, 1 Cabo USB, 1 Manual</span></li>
+            </ul>
+        </section>
+
+        <section class="cta" id="cta-final">
+            <h2 class="section-title reveal">Diga adeus ao calor.</h2>
+            <p class="section-subtitle reveal">Perfeito para o escritório, quarto ou qualquer lugar que precise de um alívio imediato. Leve, prático e eficiente.</p>
+            <a href="#" class="btn reveal" data-open-checkout>Comprar Agora</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Mini Climatizador de ar portátil, umidificador e ventilador. Produto novo com manual e cabo USB. Adaptador de tomada não incluso.</p>
+            <p>© <span id="year">2025</span> KIIBARATO. Todos os direitos reservados.</p>
+            <p></p>
+            <p><a href="mailto:contato@kiibarato.com.br">contato@kiibarato.com.br</a></p>
+            <p><a href="tel:+5544999999999">(11) 91607-2188</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // SCRIPT PARA ATUALIZAR O ANO NO RODAPÉ DINAMICAMENTE
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // SCRIPT PARA ANIMAÇÃO DE ELEMENTOS AO ROLAR A PÁGINA (SCROLL REVEAL)
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(element => { observer.observe(element); });
+
+        // SCRIPT PARA O BOTÃO DE CHECKOUT
+        const CHECKOUT_LINK = 'https://s.shopee.com.br/9Us2WKNHus'; 
+        const checkoutButtons = document.querySelectorAll('[data-open-checkout]');
+        checkoutButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                window.open(CHECKOUT_LINK, '_blank');
+            });
+        });
+        
+        // AVISO NO CONSOLE PARA O DESENVOLVEDOR
+        window.addEventListener('load', () => {
+            if (!CHECKOUT_LINK || CHECKOUT_LINK.includes('SEU-LINK-AQUI')) {
+                console.warn('⚠ ATENÇÃO: O link do checkout é um exemplo. Substitua a constante CHECKOUT_LINK no script pelo seu link de pagamento real.');
+            }
+        });
+
+        // SCRIPT PARA O CONTROLE DE ÁUDIO DO VÍDEO
+        const heroVideo = document.getElementById('heroVideo');
+        const muteToggle = document.getElementById('muteToggle');
+        const volumeOnIcon = document.getElementById('volumeOnIcon');
+        const volumeOffIcon = document.getElementById('volumeOffIcon');
+
+        if(muteToggle) {
+            muteToggle.addEventListener('click', () => {
+                const isMuted = heroVideo.muted;
+                heroVideo.muted = !isMuted;
+                volumeOnIcon.style.display = isMuted ? 'block' : 'none';
+                volumeOffIcon.style.display = isMuted ? 'none' : 'block';
+            });
+        }
+        
+        function setInitialVolumeIcon() {
+            if(!heroVideo || !volumeOnIcon || !volumeOffIcon) return;
+            if (heroVideo.muted) {
+                volumeOnIcon.style.display = 'none';
+                volumeOffIcon.style.display = 'block';
+            } else {
+                volumeOnIcon.style.display = 'block';
+                volumeOffIcon.style.display = 'none';
+            }
+        }
+        setInitialVolumeIcon();
+    </script>
+</body>
+</html>
